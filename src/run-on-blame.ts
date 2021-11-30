@@ -17,6 +17,8 @@ export async function runOnBlame(files: string[]): Promise<void> {
       core.getInput('phpcs_path', { required: true }),
       options
     );
+    
+    console.log(lintResults);
 
     const dontFailOnWarning =
       core.getInput('fail_on_warnings') == 'false' ||
