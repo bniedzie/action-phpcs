@@ -17,8 +17,6 @@ export async function runOnBlame(files: string[]): Promise<void> {
       core.getInput('phpcs_path', { required: true }),
       options
     );
-    
-    console.log(lintResults.totals.errors);
 
     const dontFailOnWarning =
       core.getInput('fail_on_warnings') == 'false' ||
@@ -43,7 +41,7 @@ export async function runOnBlame(files: string[]): Promise<void> {
       const blameMap = await blame(file);
       let headerPrinted = false;
       for (const message of results.messages) {
-        if (blameMap.get(message.line)?.authorMail === authorEmail) {
+        if (blameMap.get(message.line)?.authorMail.toLowerCase() === authorEmail.toLowerCase()) {
           // that's our line
           // we simulate checkstyle output to be picked up by problem matched
           if (!headerPrinted) {
@@ -63,16 +61,7 @@ export async function runOnBlame(files: string[]): Promise<void> {
           if (message.type === 'WARNING' && !dontFailOnWarning)
             core.setFailed(message.message);
           else if (message.type === 'ERROR') core.setFailed(message.message);
-        } else {
-          console.log(
-            '<error line="%d" column="%d" severity="%s" message="%s" source="%s"/>',
-            message.line,
-            message.column,
-            message.type.toLowerCase(),
-            message.message,
-            message.source
-          );
-        }
+        } 
       }
     }
   } catch (err) {
