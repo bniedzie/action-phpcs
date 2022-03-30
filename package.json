@@ -35,7 +35,7 @@
   "devDependencies": {
     "@types/jest": "26.0.8",
     "@types/node": "13.13.15",
-    "@types/picomatch": "2.2.1",
+    "@types/micromatch": "4.0.4",
     "@typescript-eslint/eslint-plugin": "3.4.0",
     "@typescript-eslint/parser": "3.4.0",
     "@zeit/ncc": "0.22.3",
